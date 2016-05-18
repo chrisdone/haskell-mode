@@ -518,7 +518,9 @@ When MODULE-BUFFER is non-NIL, paint error overlays."
                         (concat file ":" location-raw ": x")))
              (line (plist-get location :line))
              (col1 (plist-get location :col)))
-        (when module-buffer
+        (when (and module-buffer
+                   (or (eq type 'warning)
+                       (eq type 'error)))
           (haskell-check-paint-overlay
            module-buffer
            (string= (file-truename (buffer-file-name module-buffer))
